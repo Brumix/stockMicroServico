@@ -1,0 +1,28 @@
+{
+  "name": "stockmicroservico",
+  "version": "1.0.0",
+  "description": "stock microservice",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Brumix/stockMicroServico.git"
+  },
+  "author": "Bruno Pereira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Brumix/stockMicroServico/issues"
+  },
+  "homepage": "https://github.com/Brumix/stockMicroServico#readme",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
