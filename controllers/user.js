@@ -2,69 +2,64 @@ import prisma from "../service/prismaClient.js";
 
 
 export const getUser = async (req, res) => {
-    const User = await prisma.user.findFirst({
+    const user = await prisma.user.findFirst({
         where: {
             email: req.body['email'],
             deletedAt: null
         }
+    }).catch((e) => {
+        console.log(e)
+        res.status(400).send("Error getting the user!!")
     })
-
-    res.send(User)
+    if (user === null) {
+        res.status(400).send("User not found!!")
+        return
+    }
+    res.send(user)
 }
 
 export const postUser = async (req, res) => {
-    const User = await prisma.user.create({
+    const user = await prisma.user.create({
         data: {
-            email: req.body["email"],
-            role: req.body["role"]
+            email: req.body["email"]
         }
+    }).catch((e) => {
+        console.log(e)
+        res.status(400).send("Error creating the user!!")
     })
-    res.send(User)
+    res.send(user)
 }
 
 export const putUser = async (req, res) => {
-    let user = null
 
-    if (req.body["role"] !== undefined) {
-        user = await prisma.user.update({
-            where: {
-                email: req.body["oldEmail"]
-            },
-            data: {
-                role: req.body["role"]
-            }
-        }).catch(
-            res.send(400, "User not found!!")
-        )
-    }
-    if (req.body["newEmail"] !== undefined) {
-        user = await prisma.user.update({
-            where: {
-                email: req.body["oldEmail"]
-            },
-            data: {
-                email: req.body["newEmail"]
-            }
-        }).catch(
-            res.send(400, "User not found!!")
-        )
-    }
-
+    const user = await prisma.user.update({
+        where: {
+            email: req.body["oldEmail"]
+        },
+        data: {
+            email: req.body["newEmail"]
+        }
+    }).catch((e) => {
+        console.log(e)
+        res.status(400).send("Error updating the user!!")
+    })
     res.send(user || " ")
 }
 
 export const deleteUser = async (req, res) => {
-    const User = await prisma.user.update({
+    const user = await prisma.user.update({
         where: {
-            email: req.body["email"],
-            deletedAt: null
+            email: req.body["email"]
         },
         data: {
             deletedAt: new Date()
         }
 
+    }).catch((e) => {
+        console.log(e)
+        res.status(400).send("Error deleting the user!!")
     })
-    res.send(User)
+    res.send(user)
 }
 
 
