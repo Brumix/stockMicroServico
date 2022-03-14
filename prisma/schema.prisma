@@ -1,13 +1,15 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+generator js {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 model User {
@@ -54,7 +56,7 @@ model stock_broker {
 model Position {
   id            Int          @id @default(autoincrement())
   action        Action
-  price         Float        @db.DoublePrecision
+  price         Float        @db.Float
   time          DateTime     @default(now())
   isClosed      Boolean      @default(false)
   userId        Int
@@ -73,8 +75,8 @@ model Results {
   user       User      @relation(fields: [userId], references: [id])
   positionId Int
   position   Position  @relation(fields: [positionId], references: [id])
-  buyPrice   Float     @db.DoublePrecision
-  closePrice Float     @db.DoublePrecision
+  buyPrice   Float     @db.Float
+  closePrice Float     @db.Float
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   deletedAt  DateTime?
