@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique @db.VarChar(100)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
+  Results   Results[]
+  Position  Position[]
+}
+
+model Broker {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  deletedAt    DateTime?
+  stock_broker stock_broker[]
+}
+
+model Stock {
+  id          Int            @id @default(autoincrement())
+  stockSym    String         @unique @db.VarChar(20)
+  company     String         @db.VarChar(50)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  deletedAt   DateTime?
+  stockBroker stock_broker[]
+}
+
+model stock_broker {
+  id        Int        @id @default(autoincrement())
+  stockId   Int
+  stock     Stock      @relation(fields: [stockId], references: [id])
+  brokerId  Int
+  broker    Broker     @relation(fields: [brokerId], references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
+  Position  Position[]
+}
+
+model Position {
+  id            Int          @id @default(autoincrement())
+  action        Action
+  price         Float        @db.DoublePrecision
+  time          DateTime     @default(now())
+  isClosed      Boolean      @default(false)
+  userId        Int
+  user          User         @relation(fields: [userId], references: [id])
+  stockBrokerId Int
+  stockBroker   stock_broker @relation(fields: [stockBrokerId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  deletedAt     DateTime?
+  Results       Results[]
+}
+
+model Results {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id])
+  positionId Int
+  position   Position  @relation(fields: [positionId], references: [id])
+  buyPrice   Float     @db.DoublePrecision
+  closePrice Float     @db.DoublePrecision
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+}
+
+enum Action {
+  BUY
+  Sell
+}
