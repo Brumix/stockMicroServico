@@ -38,6 +38,8 @@ export const createResult = async (position, emailUser, stock) => {
                 },
             },
         },
+    }).catch((e) => {
+        console.log(e)
     })
 
 }
