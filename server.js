@@ -22,6 +22,6 @@ app.use('/user/results', results)
 app.use('/stockBroker', stockBrokerRoute)
 
 
-app.get('/', (req, res) => res.send('Hello From MicroService!!'))
+app.get('/', (req, res) => res.send({msg: 'Hello From MicroService!!'}))
 
 app.listen(PORT, () => console.log(`Server Listening in ${PORT}`))
