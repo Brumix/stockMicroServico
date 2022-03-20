@@ -11,6 +11,6 @@ router.get('/:name', controller.getStocks)
 router.post('/', controller.postStocks)
 router.put('/', controller.putStocks)
 router.delete('/', controller.deleteStocks)
-
+router.get('/data/:name', controller.getStockInfo)
 
 export default router

@@ -7,7 +7,7 @@ export const getUser = async (req, res) => {
             email: req.body['email'],
             deletedAt: null
         }
-    }).catch((e) => {
+    }).catch(() => {
         console.log(e)
         res.status(400).send("Error getting the user!!")
     })
@@ -23,8 +23,7 @@ export const postUser = async (req, res) => {
         data: {
             email: req.body["email"]
         }
-    }).catch((e) => {
-        console.log(e)
+    }).catch(() => {
         res.status(400).send("Error creating the user!!")
     })
     res.send(user)
@@ -39,8 +38,7 @@ export const putUser = async (req, res) => {
         data: {
             email: req.body["newEmail"]
         }
-    }).catch((e) => {
-        console.log(e)
+    }).catch(() => {
         res.status(400).send("Error updating the user!!")
     })
     res.send(user || " ")
@@ -55,8 +53,7 @@ export const deleteUser = async (req, res) => {
             deletedAt: new Date()
         }
 
-    }).catch((e) => {
-        console.log(e)
+    }).catch(() => {
         res.status(400).send("Error deleting the user!!")
     })
     res.send(user)

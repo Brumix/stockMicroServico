@@ -1,4 +1,5 @@
 import prisma from "../service/prismaClient.js";
+import axios from "axios";
 
 
 export const getStocks = async (req, res) => {
@@ -75,4 +76,18 @@ export const deleteStocks = async (req, res) => {
         res.status(400).send("Error deleting the stock!!")
     })
     res.send(stock)
+}
+
+
+export const getStockPrice = (stock) => {
+    console.log(stock)
+    return 350
+}
+
+export const getStockInfo = async (req, res) => {
+    const stock = req.params.name
+    const apikey = process.env.APIKEY
+    const stockUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stock}&interval=5min&apikey=${apikey}`
+    const result = await axios.get(stockUrl)
+    res.send(result.data)
 }

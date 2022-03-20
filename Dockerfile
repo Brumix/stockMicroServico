@@ -17,5 +17,7 @@ COPY . .
 # Open desired port
 EXPOSE $PORT
 
+RUN npx prisma generate
+#RUN npx prisma migrate dev --name init
 # Use js files to run the application
 ENTRYPOINT ["node", "server.js"]

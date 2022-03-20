@@ -15,8 +15,8 @@ const PORT = process.env.PORT || 5000
 
 app.use(bodyParser.json())
 app.use('/user', userRoutes)
-app.use('/user/stocks', stocksRoutes)
-app.use('/user/broker', brokerRoutes)
+app.use('/stock', stocksRoutes)
+app.use('/broker', brokerRoutes)
 app.use('/user/positions', positions)
 app.use('/user/results', results)
 app.use('/stockBroker', stockBrokerRoute)
