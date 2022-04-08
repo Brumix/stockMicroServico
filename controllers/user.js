@@ -8,7 +8,6 @@ export const getUser = async (req, res) => {
             deletedAt: null
         }
     }).catch(() => {
-        console.log(e)
         res.status(400).send("Error getting the user!!")
     })
     if (user === null) {

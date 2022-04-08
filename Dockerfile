@@ -14,10 +14,14 @@ RUN npm i --only=production
 # Copy transpiled js from builder stage into the final image
 COPY . .
 
+#create the prisma client
+RUN npx prisma generate
+
 # Open desired port
 EXPOSE $PORT
 
-RUN npx prisma generate
-#RUN npx prisma migrate dev --name init
+#run the migrations
+CMD ["npx","prisma","migrate","dev","--name","init"]
+
 # Use js files to run the application
 ENTRYPOINT ["node", "server.js"]
