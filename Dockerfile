@@ -3,8 +3,6 @@ FROM node:14-alpine
 # Use /app as CWD
 WORKDIR /app
 
-ENV PORT=3000
-
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
@@ -17,11 +15,13 @@ COPY . .
 #create the prisma client
 RUN npx prisma generate
 
+RUN chmod +x /app/start.sh
+
 # Open desired port
 EXPOSE $PORT
 
-#run the migrations
-CMD ["npx","prisma","migrate","dev","--name","init"]
+#Run setup and iniciate the app
+ENTRYPOINT ["/app/start.sh"]
 
-# Use js files to run the application
-ENTRYPOINT ["node", "server.js"]
+
+
