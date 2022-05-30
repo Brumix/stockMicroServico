@@ -5,7 +5,7 @@ test("Default Test",
 )
 
 
-test("+1 ",
+test("+1",
     () => {
         expect(1 + 1).toBe(2)
     }
