@@ -1,4 +1,5 @@
 import prisma from "../service/prismaClient.js";
+import {getStockPrice} from "./stocks.js";
 
 
 export const getResults = async (req, res) => {
@@ -42,12 +43,6 @@ export const createResult = async (position, emailUser, stock) => {
         console.log(e)
     })
 
-}
-
-
-const getStockPrice = (stock) => {
-    console.log(`todo get stock ${stock}`)
-    return 350
 }
 
 

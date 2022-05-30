@@ -25,7 +25,6 @@ export const getPositions = async (req, res) => {
 export const postPositions = async (req, res) => {
 
     const body = req.body
-
     const stockBroker = await prisma.stock_broker.findFirst({
         where: {
             broker: {
